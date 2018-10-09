@@ -13,7 +13,7 @@
 # limitations under the License.
 # ==============================================================================
 """Simple transfer learning with an Inception v3 architecture model which
-displays summaries in TensorBoard. 
+displays summaries in TensorBoard
 
 This example shows how to take a Inception v3 architecture model trained on
 ImageNet images, and train a new top layer that can recognize other classes of
