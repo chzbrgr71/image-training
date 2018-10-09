@@ -13,6 +13,9 @@ events.on("push", (brigadeEvent, project) => {
     var imageTag = branch + "-" + gitSHA
 
     console.log(`==> gitHub webook on ${branch} branch with commit ID ${gitSHA}`)
+    console.log(`servprin=${azServicePrincipal}`)
+    console.log(`secret=${azClientSecret}`)
+    console.log(`tenant=${azTenant}`)
 
     // setup brigade job to build container images
     var acr = new Job("job-runner-acr-builder")
