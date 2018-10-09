@@ -24,7 +24,7 @@ events.on("push", (brigadeEvent, project) => {
     acr.image = "briaracr.azurecr.io/chzbrgr71/microsoft/azure-cli:2.0.46"
     acr.tasks = [
         `az login --service-principal -u ${azServicePrincipal} -p ${azClientSecret} --tenant ${azTenant}`,
-        `az acr build -t chzbrgr71/image-retrain:${imageTag} -r ${acrName} .`
+        `az acr build -t chzbrgr71/image-retrain:${imageTag} -r ${acrName} ./src/Dockerfile`
     ]
 
     // setup brigade job deploying TFJob in Kubernetes
