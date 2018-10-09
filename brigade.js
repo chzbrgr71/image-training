@@ -3,13 +3,11 @@ const { events, Job, Group } = require('brigadier')
 events.on("push", (brigadeEvent, project) => {
     
     // setup variables
-    var acrServer = project.secrets.acrServer
     var acrName = project.secrets.acrName
     var azServicePrincipal = project.secrets.appId
     var azClientSecret = project.secrets.password
     var azTenant = project.secrets.tenant
     var gitPayload = JSON.parse(brigadeEvent.payload)
-    var today = new Date()
     var gitSHA = brigadeEvent.revision.commit.substr(0,7)
     var branch = getBranch(gitPayload)    
     var imageTag = branch + "-" + gitSHA
@@ -19,26 +17,24 @@ events.on("push", (brigadeEvent, project) => {
     // setup brigade job to build container images
     var acr = new Job("job-runner-acr-builder")
     acr.storage.enabled = false
-    acr.image = "microsoft/azure-cli:2.0.38"
+    acr.image = "microsoft/azure-cli:2.0.46"
     acr.tasks = [
         `az login --service-principal -u ${azServicePrincipal} -p ${azClientSecret} --tenant ${azTenant}`,
-        `az acr build -t hackfest/data-api:${imageTag} -r ${acrName} ./src/app/data-api`,
-        `az acr build -t hackfest/flights-api:${imageTag} -r ${acrName} ./src/app/flights-api`,
-        `az acr build -t hackfest/service-tracker-ui:${imageTag} -r ${acrName} ./src/app/service-tracker-ui`
+        `az acr build -t chzbrgr71/image-retrain:${imageTag} -r ${acrName} .`
     ]
 
-    // setup brigade job for helm deployment
-    var k = new Job("job-runner-k8s")
-    k.storage.enabled = false
-    k.image = "lachlanevenson/k8s-kubectl:v1.8.2"
-    k.tasks = [
-        `kubectl set image deployment/heroes-web-deploy heroes-web-cntnr=<youracrhere>.azurecr.io/azureworkshop/rating-web:${config.get("imageTag")}`
+    // setup brigade job deploying TFJob in Kubernetes
+    var helm = new Job("job-runner-helm")
+    helm.storage.enabled = false
+    helm.image = "lachlanevenson/k8s-helm:v2.10.0"
+    helm.tasks = [
+        `helm install --name image-retrain --set imageTag=${imageTag} ./chart`
     ]
 
     // create a brigade group and run
     var pipeline = new Group()
     pipeline.add(acr)
-    pipeline.add(k)
+    pipeline.add(helm)
     pipeline.runEach()
 
 })
