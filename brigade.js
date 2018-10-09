@@ -21,7 +21,8 @@ events.on("push", (brigadeEvent, project) => {
     // setup brigade job to build container images
     var acr = new Job("job-runner-acr-builder")
     acr.storage.enabled = false
-    acr.image = "briaracr.azurecr.io/chzbrgr71/microsoft/azure-cli:2.0.46"
+    acr.image = "microsoft/azure-cli:2.0.46"
+    //acr.image = "briaracr.azurecr.io/chzbrgr71/microsoft/azure-cli:2.0.46"
     acr.tasks = [
         `cd /src`,
         `az login --service-principal -u ${azServicePrincipal} -p ${azClientSecret} --tenant ${azTenant}`,
