@@ -21,7 +21,7 @@ events.on("push", (brigadeEvent, project) => {
     // setup brigade job to build container images
     var acr = new Job("job-runner-acr-builder")
     acr.storage.enabled = false
-    acr.image = "microsoft/azure-cli:2.0.46"
+    acr.image = "briaracr.azurecr.io/chzbrgr71/microsoft/azure-cli:2.0.46"
     acr.tasks = [
         `az login --service-principal -u ${azServicePrincipal} -p ${azClientSecret} --tenant ${azTenant}`,
         `az acr build -t chzbrgr71/image-retrain:${imageTag} -r ${acrName} .`
@@ -30,7 +30,7 @@ events.on("push", (brigadeEvent, project) => {
     // setup brigade job deploying TFJob in Kubernetes
     var helm = new Job("job-runner-helm")
     helm.storage.enabled = false
-    helm.image = "lachlanevenson/k8s-helm:v2.10.0"
+    helm.image = "briaracr.azurecr.io/chzbrgr71/k8s-helm:v2.10.0"
     helm.tasks = [
         `helm install --name image-retrain --set imageTag=${imageTag} ./chart`
     ]
