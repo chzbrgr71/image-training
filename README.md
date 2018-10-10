@@ -13,9 +13,9 @@ SLACK_WEBHOOK=
 
 az acr task create \
     --registry $ACR_NAME \
-    --name task-tf-image-training \
+    --name tf-image-training \
     --context https://github.com/chzbrgr71/image-training.git \
     --branch master \
     --file acr-task.yaml \
     --git-access-token $GIT_PAT \
-    --secret-arg SLACK_WH=$SLACK_WEBHOOK
+    --set-secret SLACK_WEBHOOK=$SLACK_WEBHOOK
