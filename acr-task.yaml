@@ -3,7 +3,7 @@ steps:
   - id: build-image
     build: -t {{.Run.Registry}}/chzbrgr71/image-retrain:acr-task-{{.Run.ID}} .
   - id: push-image
-    push: ["{{.Run.Registry}}/chzbrgr71/image-retrain:acr-task-{{.Run.ID}}{{.Run.ID}}"]
+    push: ["{{.Run.Registry}}/chzbrgr71/image-retrain:acr-task-{{.Run.ID}}"]
   - id: slack-notify
     cmd: technosophos/slack-notify:latest
     env:
