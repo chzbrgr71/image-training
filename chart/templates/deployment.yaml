@@ -21,7 +21,7 @@ spec:
       template:
         spec:
           containers:
-            - image: chzbrgr71/image-retrain:{{.Values.imageTag}}
+            - image: {{.Values.image}}:{{.Values.imageTag}}
               name: tensorflow
               args:                
                 - "--bottleneck_dir=/tf-output/bottlenecks"
