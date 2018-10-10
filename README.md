@@ -7,6 +7,7 @@ az acr run -r briaracr -f acr-task.yaml https://github.com/chzbrgr71/image-train
 
 ### Setup Github webhook
 
+```bash
 ACR_NAME=briaracr    
 GIT_PAT=
 SLACK_WEBHOOK=
@@ -19,3 +20,4 @@ az acr task create \
     --file acr-task.yaml \
     --git-access-token $GIT_PAT \
     --set-secret SLACK_WEBHOOK=$SLACK_WEBHOOK
+```
