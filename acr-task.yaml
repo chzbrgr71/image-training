@@ -1,9 +1,9 @@
 version: 1.0-preview-1
 steps:
-  - build: -t {{.Run.Registry}}/chzbrgr71/image-retrain:{{.Run.ID}} .
-  - push: ["{{.Run.Registry}}/chzbrgr71/image-retrain:{{.Run.ID}}"]
-  - id: slackNotify
+  - id: build-image
+    build: -t {{.Run.Registry}}/chzbrgr71/image-retrain:{{.Run.ID}} .
+  - id: push-image
+    push: ["{{.Run.Registry}}/chzbrgr71/image-retrain:{{.Run.ID}}"]
+  - id: slack-notify
     cmd: technosophos/slack-notify:latest
-    env: ["SLACK_TITLE=message"]
-    env: ["SLACK_WEBHOOK=https://hooks.slack.com/services/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"]
-    env: ["SLACK_MESSAGE=build complete"]
+    env: ["SLACK_TITLE=message","SLACK_WEBHOOK=https://hooks.slack.com/services/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","SLACK_MESSAGE=build complete"]
