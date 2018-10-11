@@ -21,3 +21,5 @@ az acr task create \
     --git-access-token $GIT_PAT \
     --set-secret SLACK_WEBHOOK=$SLACK_WEBHOOK
 ```
+
+helm install --name image-retrain --set image=briaracr.azurecr.io/chzbrgr71/image-retrain --set imageTag=1.0 ./chart

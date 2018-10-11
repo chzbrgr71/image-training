@@ -24,7 +24,7 @@ spec:
             - image: {{.Values.image}}:{{.Values.imageTag}}
               name: tensorflow
               args:                
-                - "--bottleneck_dir=/tf-output/bottlenecks"
+                - "--bottleneck_dir=bottlenecks"
                 - "--model_dir=/tf-output/inception"
                 - "--summaries_dir=/tf-logs/training_summaries/baseline"
                 - "--output_graph=/tf-output/retrained_graph.pb"
