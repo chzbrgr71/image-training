@@ -10,4 +10,4 @@ steps:
       - SLACK_WEBHOOK={{.Values.SLACK_WEBHOOK}}
       - SLACK_CHANNEL="general"
       - SLACK_USERNAME="Azure Container Registry Task"
-      - SLACK_MESSAGE="ACR Task docker build complete. Training command-> ```helm install --name image-retrain --set image={{.Run.Registry}}/chzbrgr71/image-retrain,imageTag=acr-task-{{.Run.ID}} ./chart```"
+      - SLACK_MESSAGE="ACR Task docker build complete. Training command-> helm install --name image-retrain --set image={{.Run.Registry}}/chzbrgr71/image-retrain,imageTag=acr-task-{{.Run.ID}} ./chart"
