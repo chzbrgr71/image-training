@@ -22,6 +22,8 @@ az acr task create \
     --set-secret SLACK_WEBHOOK=$SLACK_WEBHOOK
 ```
 
+### Helm Commands
+
 ```
 helm install --name image-retrain --set image=briaracr.azurecr.io/chzbrgr71/image-retrain,imageTag=1.0 ./chart
 
