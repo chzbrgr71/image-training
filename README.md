@@ -25,7 +25,7 @@ az acr task create \
 ### Helm Commands
 
 ```
-
+helm install --set container.image=briaracr.azurecr.io/chzbrgr71/image-retrain,container.imageTag=acr-task-ca1h,tfjob.name=tfjob-yourname ./chart
 
 helm install --set tensorboard.name=tensorboard-name ./tensorboard-chart
 ```
