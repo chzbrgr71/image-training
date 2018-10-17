@@ -44,6 +44,7 @@ spec:
         - /tmp/tensorflow
         volumeMounts:
           - mountPath: /tmp/tensorflow
+            subPath: {{.Values.container.subPath}}
             name: {{.Values.container.pvcName}}
         ports:
         - containerPort: 6006
