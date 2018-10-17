@@ -3,12 +3,12 @@
 helm install --name brig-proj-training brigade/brigade-project -f brig-proj-training.yaml
 
 ### To run a build manually
-az acr run -r briaracr -f acr-task.yaml https://github.com/chzbrgr71/image-training.git
+az acr run -r briar -f acr-task.yaml https://github.com/chzbrgr71/image-training.git
 
 ### Setup Github webhook
 
 ```bash
-ACR_NAME=briaracr    
+ACR_NAME=briar
 GIT_PAT=
 SLACK_WEBHOOK=
 
@@ -25,7 +25,7 @@ az acr task create \
 ### Helm Commands
 
 ```
-helm install --set container.image=briaracr.azurecr.io/chzbrgr71/image-retrain,container.imageTag=acr-task-ca1h,tfjob.name=tfjob-yourname ./chart
+helm install --set container.image=briar.azurecr.io/chzbrgr71/image-retrain,container.imageTag=1.8-gpu,container.pvcName=azure-files-backup,tfjob.name=tfjob-image-training ./chart
 
-helm install --set tensorboard.name=tensorboard-name ./tensorboard-chart
+helm install --set tensorboard.name=tensorboard-image-training,container.pvcName=azure-files-backup,container.subPath=tfjob-briar ./tensorboard-chart
 ```
