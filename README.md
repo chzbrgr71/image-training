@@ -22,10 +22,21 @@ az acr task create \
     --set-secret SLACK_WEBHOOK=$SLACK_WEBHOOK
 ```
 
-### Helm Commands
+### Commands
+
+* Run training
 
 ```
 helm install --set container.image=briar.azurecr.io/chzbrgr71/image-retrain,container.imageTag=1.8-gpu,container.pvcName=azure-files-backup,tfjob.name=tfjob-image-training ./chart
 
 helm install --set tensorboard.name=tensorboard-image-training,container.pvcName=azure-files-backup,container.subPath=tfjob-briar ./tensorboard-chart
+```
+
+* Download model (while TB pod is running)
+
+```bash        
+# to download model from pod
+PODNAME=
+kubectl cp default/$PODNAME:/tmp/tensorflow/tf-output/retrained_graph.pb ~/Downloads/retrained_graph.pb
+kubectl cp default/$PODNAME:/tmp/tensorflow/tf-output/retrained_labels.txt ~/Downloads/retrained_labels.txt
 ```
