@@ -27,9 +27,9 @@ az acr task create \
 * Run training
 
 ```
-helm install --set container.image=briar.azurecr.io/chzbrgr71/image-retrain,container.imageTag=1.8-gpu,container.pvcName=azure-files-backup,tfjob.name=tfjob-image-training ./chart
+helm install --set container.image=briar.azurecr.io/chzbrgr71/image-retrain,container.imageTag=build-cb9,container.pvcName=azure-files,tfjob.name=tfjob-brianredmond ./chart
 
-helm install --set tensorboard.name=tensorboard-image-training,container.pvcName=azure-files-backup,container.subPath=tfjob-briar ./tensorboard-chart
+helm install --set tensorboard.name=tensorboard-brianredmond,container.pvcName=azure-files,container.subPath=tfjob-brianredmond ./tensorboard-chart
 ```
 
 * Download model (while TB pod is running)
