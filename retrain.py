@@ -13,7 +13,7 @@
 # limitations under the License.
 # ==============================================================================
 """Simple transfer learning with an Inception v3 architecture model which
-displays summaries in TensorBoard
+displays summaries in TensorBoard.
 
 This example shows how to take a Inception v3 architecture model trained on
 ImageNet images, and train a new top layer that can recognize other classes of
@@ -355,6 +355,7 @@ def create_bottleneck_file(bottleneck_path, image_lists, label_name, index,
   image_data = gfile.FastGFile(image_path, 'rb').read()
   bottleneck_values = run_bottleneck_on_image(sess, image_data, jpeg_data_tensor, bottleneck_tensor)
   bottleneck_string = ','.join(str(x) for x in bottleneck_values)
+  #bottleneck_string = ','.join(str(y) for x in bottleneck_values)
   with open(bottleneck_path, 'w') as bottleneck_file:
     bottleneck_file.write(bottleneck_string)
 
