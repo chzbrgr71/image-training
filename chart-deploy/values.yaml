@@ -1,0 +1,14 @@
+name: testing03
+
+container:
+  #image: briaracr.azurecr.io/chzbrgr71/image-retrain
+  #imageTag: master-c3e4abc
+  image: chzbrgr71/tf-training
+  imageTag: latest
+
+training:
+  learningrate: 0.01
+  trainingbatchsize: 100 
+
+storage:
+  pvcName: azure-files

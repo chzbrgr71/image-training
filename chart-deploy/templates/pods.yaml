@@ -1,0 +1,64 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: tf-training-{{.Values.name}}
+spec:
+  template:
+    metadata:
+      labels:
+        app: tf-training-{{.Values.name}}
+    spec:
+      containers:
+        - image: "{{.Values.container.image}}:{{.Values.container.imageTag}}"
+          imagePullPolicy: Always
+          name: tf-training
+          args:                
+            - "--bottleneck_dir=bottlenecks"
+            - "--model_dir=/tmp/tensorflow/tf-output/inception"
+            - "--summaries_dir=/output/training_summaries/baseline"
+            - "--output_graph=/output/retrained_graph.pb"
+            - "--output_labels=/output/retrained_labels.txt"
+            - "--image_dir=images"     
+            - "--learning_rate={{.Values.training.learningrate}}"
+            - "--train_batch_size={{.Values.training.trainingbatchsize}}"
+          volumeMounts:
+            - name: {{.Values.storage.pvcName}}
+              mountPath: /output
+              subPath: {{.Values.name}}
+      restartPolicy: Never
+      volumes:
+        - name: {{.Values.storage.pvcName}}
+          persistentVolumeClaim:
+            claimName: {{.Values.storage.pvcName}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tensorboard-{{.Values.name}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tensorboard-{{.Values.name}}
+  template:
+    metadata:
+      labels:
+        app: tensorboard-{{.Values.name}}
+    spec:
+      containers:
+        - image: chzbrgr71/tensorboard:1.9
+          imagePullPolicy: Always
+          name: tensorboard
+          args:                
+            - "--logdir=/output/training_summaries"
+          ports:
+          - containerPort: 6006
+            protocol: TCP
+          volumeMounts:
+            - name: {{.Values.storage.pvcName}}
+              mountPath: /output
+              subPath: {{.Values.name}}
+      volumes:
+        - name: {{.Values.storage.pvcName}}
+          persistentVolumeClaim:
+            claimName: {{.Values.storage.pvcName}}      
