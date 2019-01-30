@@ -31,7 +31,7 @@ events.on("push", (brigadeEvent, project) => {
     helm.storage.enabled = false
     helm.image = "lachlanevenson/k8s-helm:v2.12.3"
     helm.tasks = [
-        `helm install --name tf-training --set name=${jobIdentifier},container.image=${image},container.imageTag=${imageTag} ./src/chart-deploy`
+        `helm install --name tf-training --set name=${jobIdentifier},container.image=${acrName}.azurecr.io/${image},container.imageTag=${imageTag} ./src/chart-deploy`
     ]
    
     // create a brigade group and run
